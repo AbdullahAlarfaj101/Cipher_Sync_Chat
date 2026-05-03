@@ -1,4 +1,3 @@
-
 # 🛡️ Cipher_Sync_Chat
 
 A robust, secure chat application focused on data privacy, secure communications, and seamless user experience. Designed to facilitate encrypted messaging with a clean interface, utilizing a dual-database architecture for local persistence and real-time cloud synchronization.
@@ -15,13 +14,13 @@ A robust, secure chat application focused on data privacy, secure communications
 * **Cloud Backend & Database:** Supabase (PostgreSQL, Realtime, Auth)
 * **Local Database:** SQLite
 * **Security:** Python cryptography libraries for data encryption
-* **GUI Framework:** PyQt5 *(قم بتعديلها إذا استخدمت مكتبة واجهات أخرى مثل Tkinter أو CustomTkinter)*
+* **GUI Framework:** PyQt5
 
 ## 🚀 Installation & Setup
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/yourusername/Cipher_Sync_Chat.git](https://github.com/yourusername/Cipher_Sync_Chat.git)
+   git clone https://github.com/AbdullahAlarfaj101/Cipher_Sync_Chat.git
    cd Cipher_Sync_Chat
 Install the required dependencies:
 
@@ -31,10 +30,10 @@ Environment Variables:
 Create a .env file in the root directory and add your Supabase credentials:
 
 Code snippet
-SUPABASE_URL=your_supabase_project_url
-SUPABASE_KEY=your_supabase_anon_key
+   SUPABASE_URL=your_supabase_project_url
+   SUPABASE_KEY=your_supabase_anon_key
 Database Initialization:
-The local SQLite database (chat_history.db) will automatically initialize on the first run. Make sure your Supabase remote tables match the required schema.
+The local SQLite database (chat_history.db) will automatically initialize on the first run. Make sure your Supabase remote tables match the required schema. (Note: You can include an SQL script in your repository for easy Supabase setup).
 
 Run the application:
 
