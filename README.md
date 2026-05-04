@@ -1,48 +1,52 @@
 # 🛡️ Cipher_Sync_Chat
 
-A robust, secure chat application focused on data privacy, secure communications, and seamless user experience. Designed to facilitate encrypted messaging with a clean interface, utilizing a dual-database architecture for local persistence and real-time cloud synchronization.
+A highly secure, local-first chat application engineered with a focus on data privacy, in-memory cryptographic processing, and a Zero-Trace server architecture. Designed to facilitate end-to-end encrypted messaging, voice, and file transfers using a dual-database approach.
 
-## ✨ Features
-* **Dual Database Syncing:** Seamlessly synchronizes local data with the cloud.
-* **Offline Support:** Local message persistence allows reading and drafting messages without an active internet connection.
-* **Real-time Messaging:** Fast and responsive chat architecture powered by Supabase.
-* **End-to-End Security:** Ensures that messages are securely transmitted and stored.
-* **User Authentication:** Secure login and registration system.
+## ✨ Core Features & Security Model
 
-## 🛠️ Tech Stack
-* **Language:** Python
-* **Cloud Backend & Database:** Supabase (PostgreSQL, Realtime, Auth)
+* **Zero-Trace Server (Blind Relay):** The remote Supabase server acts strictly as a blind relay router. Payloads and files are automatically purged from the remote cloud immediately upon successful client delivery.
+* **In-Memory Media Processing:** Voice recordings and media streams are processed entirely within RAM (using `io.BytesIO`) to prevent local disk forensic leaks before encryption occurs.
+* **Local-First Architecture:** Leverages local `SQLite` persistence, allowing users to browse chat history and draft messages even without an active internet connection.
+* **End-to-End Encryption (E2EE):** All data packets (text, audio, files) are encrypted using AES-256-GCM before ever leaving the local machine.
+* **Asynchronous Real-Time Sync:** Utilizes non-blocking async network listeners for instantaneous message delivery without freezing the PyQt6 GUI.
+
+## 🛠️ Tech Stack & Architecture
+
+* **Language:** Python 3.x
+* **GUI Framework:** PyQt6 (Frameless, custom-styled terminal UI)
+* **Cloud Backend:** Supabase (PostgreSQL, Realtime WebSockets)
 * **Local Database:** SQLite
-* **Security:** Python cryptography libraries for data encryption
-* **GUI Framework:** PyQt5
+* **Cryptography:** `cryptography` library (AES-GCM, ECDH foundations)
+* **Audio Processing:** `PyAudio` (Direct-to-RAM streaming)
 
 ## 🚀 Installation & Setup
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/AbdullahAlarfaj101/Cipher_Sync_Chat.git
+   git clone [https://github.com/AbdullahAlarfaj101/Cipher_Sync_Chat.git](https://github.com/AbdullahAlarfaj101/Cipher_Sync_Chat.git)
    cd Cipher_Sync_Chat
 Install the required dependencies:
 
 Bash
 pip install -r requirements.txt
+(Note for Windows users: You may need to install standard C++ build tools if PyAudio fails to compile).
+
 Environment Variables:
-Create a .env file in the root directory and add your Supabase credentials:
+Create a .env file in the root directory and securely add your Supabase credentials:
 
 Code snippet
-   SUPABASE_URL=your_supabase_project_url
-   SUPABASE_KEY=your_supabase_anon_key
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_KEY=your_supabase_anon_key
 Database Initialization:
-The local SQLite database (chat_history.db) will automatically initialize on the first run. Make sure your Supabase remote tables match the required schema. (Note: You can include an SQL script in your repository for easy Supabase setup).
+The local SQLite database (assets/chat_history.db) will automatically scaffold itself on the first run.
+For Supabase, ensure you have two tables: mailbox (id, sender_id, receiver_id, payload) and presence (user_id, is_online, is_typing). Create a storage bucket named secure_files.
 
-Run the application:
+Run the Application:
 
 Bash
 python main.py
-🧠 Architecture Highlights
-Local-First Architecture: By leveraging SQLite locally, the application provides immediate feedback and fast load times. Background workers then sync this data with Supabase to ensure all devices stay up-to-date.
-
-Secure Transmission: All sensitive data streams are encrypted before being pushed to the remote database, prioritizing user privacy at the architectural level.
+🧠 Future Roadmap
+While the current build utilizes a symmetric master-key approach (simulating a physical USB decryption token), the CryptoManager class is pre-configured with ECDH (Elliptic-curve Diffie–Hellman) and HKDF methods to support future implementations of dynamic, over-the-network ephemeral key exchanges.
 
 📄 License
 Distributed under the MIT License. See LICENSE for more information.
